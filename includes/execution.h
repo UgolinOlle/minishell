@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 02:03:36 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 18:33:39 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 04:06:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <errno.h>
+# include "minishell.h"
 
 # define SUCCESS 0
 
@@ -32,54 +33,6 @@
 
 # define TRUE 1
 # define FALSE 0
-
-//we should have the same values for these:
-# define PIPE 0
-# define OUTFILE 1
-# define APPEND 2
-# define INFILE 3
-# define HEREDOC 4
-
-//I mean I am not sure why this is here I guess we can get rid of this struct and just leave it as
-//char name and char heredoc_buff in t_Redir
-//but anyways name is name of the file, heredoc_buff is the text of the heredoc
-typedef struct s_file
-{
-	char	*name;
-	char	*heredoc_buff;
-}		t_file;
-
-//list of redirections so in my code I set type like PIPE, OUTFILE, APPEND etc from the defines above
-//I don't care about the values of these so we can change their numerical value if needed
-//int duplication is STDIN_FILENO for input, and STDOUT_FILENO for output,
-//it's specially necessary for pipes
-typedef struct s_redir
-{
-	int				type;
-	t_file			file;
-	int				duplication;
-	struct s_redir	*next;
-}		t_redir;
-
-//List for commands, each command node stores a command array
-//if ls the array is {"ls", NULL}; if ls -l the array is {"ls", "-l", NULL}
-//Commands are either one node (single command) or multiple nodes (comands and redirections
-//separated by pipes)
-//t_redir is list of redirections, first node to last -> redirections from left to right
-typedef struct s_cmd
-{
-	char			**array;
-	t_redir			*redir;
-	struct s_cmd	*next;
-}		t_cmd;
-
-//THESE STRUCTURES NOW ARE JUST FOR EXECUTION DON'T WORRY ABOUT THEM
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}		t_list;
-
 
 typedef struct s_exec
 {

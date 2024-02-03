@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:36:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 04:12:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 04:08:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ int	open_file(t_redir *redir, int pipe_fd)
 	if (redir->type == PIPE)
 		fd = pipe_fd;
 	else if (redir->type == INFILE)
-		fd = open(redir->file.name, O_RDONLY, 0222);
+		fd = open(redir->file_name, O_RDONLY, 0222);
 	else if (redir->type == OUTFILE)
-		fd = open(redir->file.name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		fd = open(redir->file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else if (redir->type == APPEND)
-		fd = open(redir->file.name, O_RDWR | O_CREAT | O_APPEND, 0644);
+		fd = open(redir->file_name, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (redir->type == HEREDOC)
-		fd = write_heredoc_to_pipe(redir->file.heredoc_buff);
+		fd = write_heredoc_to_pipe(redir->heredoc_buff);
 	if (fd == -1 && redir->type != PIPE)
 	{
-		perror(redir->file.name);
+		perror(redir->file_name);
 		exit(1);
 	}
 	if (fd == -1 && redir->type == PIPE)
