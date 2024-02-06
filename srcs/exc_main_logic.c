@@ -6,11 +6,14 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:28:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 04:05:45 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:21:31 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static void	piped_commands(t_cmd *cmd, t_exec *ex);
+static void	last_command(t_cmd *cmd, t_exec *ex);
 
 void	execution(t_exec *ex)
 {
@@ -35,7 +38,7 @@ void	execution(t_exec *ex)
 		clean_and_quit_program(ex);
 }
 
-void	piped_commands(t_cmd *cmd, t_exec *ex)
+static void	piped_commands(t_cmd *cmd, t_exec *ex)
 {
 	static int	curr_pipe;
 	int			curr_cmd;
@@ -63,7 +66,7 @@ void	piped_commands(t_cmd *cmd, t_exec *ex)
 	}
 }
 
-void	last_command(t_cmd *cmd, t_exec *ex)
+static void	last_command(t_cmd *cmd, t_exec *ex)
 {
 	int	last_cmd;
 

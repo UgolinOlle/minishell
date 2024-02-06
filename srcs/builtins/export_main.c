@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:11:31 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 07:49:27 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:38:22 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static void	is_export_syntax_valid(char *cmd_array, char *original_cmd);
 
 void	exec_export(char **cmd_array, t_exec *ex)
 {
@@ -36,7 +38,7 @@ void	exec_export(char **cmd_array, t_exec *ex)
 	exit(0);
 }
 
-void	is_export_syntax_valid(char *cmd_array, char *original_cmd)
+static void	is_export_syntax_valid(char *cmd_array, char *original_cmd)
 {
 	has_unclosed_quotes(cmd_array, original_cmd);
 	delete_outside_quotes(&cmd_array);

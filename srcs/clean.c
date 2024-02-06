@@ -6,11 +6,20 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 06:23:43 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:24:19 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static void	clean_t_cmd(t_cmd *cmd);
+
+void	clean_and_quit_program(t_exec *ex)
+{
+	clean_list(ex->env_list, FALSE);
+	clean_t_cmd(ex->cmd);
+	exit(ex->exit);
+}
 
 void	clean_list(t_list *list, int clean_content)
 {
@@ -26,19 +35,7 @@ void	clean_list(t_list *list, int clean_content)
 	}
 }
 
-void	add_data_to_cleanup_list(void *content, t_list **list)
-{
-	t_list	*node;
-
-	node = NULL;
-	if (!content)
-		return ;
-	new_node(content, &node);
-	node->next = (*list);
-	(*list) = node;
-}
-
-void	clean_t_cmd(t_cmd *cmd)
+static void	clean_t_cmd(t_cmd *cmd)
 {
 	int		i;
 	t_cmd	*temp_cmd;
@@ -62,9 +59,14 @@ void	clean_t_cmd(t_cmd *cmd)
 	}
 }
 
-void	clean_and_quit_program(t_exec *ex)
+void	add_data_to_cleanup_list(void *content, t_list **list)
 {
-	clean_list(ex->env_list, FALSE);
-	clean_t_cmd(ex->cmd);
-	exit(ex->exit);
+	t_list	*node;
+
+	node = NULL;
+	if (!content)
+		return ;
+	new_node(content, &node);
+	node->next = (*list);
+	(*list) = node;
 }

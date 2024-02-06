@@ -6,17 +6,16 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:13:29 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 06:04:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:36:35 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	free_buffer_and_exit(char *buffer, int exit_code)
-{
-	free(buffer);
-	exit(exit_code);
-}
+static void	free_buffer_and_exit(char *buffer, int exit_code);
+static int	update_content(char *var_name, char *new_value, t_list **env_list);
+static int	update_env(char *var_name, char *new_env, t_list *env_list);
+static void	cd_with_no_arguments(char **new_dir, char *pwd);
 
 void	exec_cd(t_cmd *cmd, char **cmd_array, t_exec *ex)
 {
@@ -43,7 +42,7 @@ void	exec_cd(t_cmd *cmd, char **cmd_array, t_exec *ex)
 	free_buffer_and_exit(buffer, 0);
 }
 
-void	cd_with_no_arguments(char **new_dir, char *pwd)
+static void	cd_with_no_arguments(char **new_dir, char *pwd)
 {
 	int	i;
 	int	slash_counter;
@@ -62,7 +61,7 @@ void	cd_with_no_arguments(char **new_dir, char *pwd)
 	}
 }
 
-int	update_env(char *var_name, char *new_env, t_list *env_list)
+static int	update_env(char *var_name, char *new_env, t_list *env_list)
 {
 	int		i;
 	char	*next_env;
@@ -77,10 +76,10 @@ int	update_env(char *var_name, char *new_env, t_list *env_list)
 	}
 	if (env_list == NULL)
 		return (EXIT_FAILURE);
-	return (update_node_content(var_name, new_env, &env_list));
+	return (update_content(var_name, new_env, &env_list));
 }
 
-int	update_node_content(char *var_name, char *new_value, t_list **env_list)
+static int	update_content(char *var_name, char *new_value, t_list **env_list)
 {
 	int		i;
 	int		j;
@@ -103,4 +102,10 @@ int	update_node_content(char *var_name, char *new_value, t_list **env_list)
 	free((*env_list)->content);
 	((*env_list)->content) = (void *)result;
 	return (EXIT_SUCCESS);
+}
+
+static void	free_buffer_and_exit(char *buffer, int exit_code)
+{
+	free(buffer);
+	exit(exit_code);
 }

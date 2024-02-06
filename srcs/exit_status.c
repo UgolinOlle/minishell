@@ -6,20 +6,11 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 08:26:04 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 05:01:10 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:22:06 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-
-void	free_env_list(t_list *env)
-{
-	while (env)
-	{
-		free(env);
-		env = env->next;
-	}
-}
 
 void	get_exit_status(t_exec *ex)
 {

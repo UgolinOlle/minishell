@@ -6,11 +6,14 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:13:41 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 06:25:03 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:35:12 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static void	check_unset_syntax(char **cmd_array);
+static void	delete_node(t_list *node_delete, t_list **head);
 
 void	exec_unset(char **cmd_array, t_exec *ex)
 {
@@ -37,7 +40,7 @@ void	exec_unset(char **cmd_array, t_exec *ex)
 	exit(0);
 }
 
-void	check_unset_syntax(char **cmd_array)
+static void	check_unset_syntax(char **cmd_array)
 {
 	int	i;
 	int	j;
@@ -58,7 +61,7 @@ void	check_unset_syntax(char **cmd_array)
 	}
 }
 
-void	delete_node(t_list *node_delete, t_list **head)
+static void	delete_node(t_list *node_delete, t_list **head)
 {
 	t_list	*list;
 

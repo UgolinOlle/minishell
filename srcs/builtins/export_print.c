@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:55:16 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/29 14:09:42 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:30:54 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static int	next_smallest_string(t_list *env, char *new_min, char *old_min);
 
 void	print_env_alphabetically(t_list *env, t_list *head)
 {
@@ -37,7 +39,7 @@ void	print_env_alphabetically(t_list *env, t_list *head)
 	}
 }
 
-int	next_smallest_string(t_list *env, char *new_min, char *old_min)
+static int	next_smallest_string(t_list *env, char *new_min, char *old_min)
 {
 	char	*next_str;
 	int		len;

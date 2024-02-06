@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:16:02 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 06:00:48 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:28:53 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static int	is_nflag(char *str);
 
 void	exec_echo(char **cmd_array)
 {
@@ -37,7 +39,7 @@ void	exec_echo(char **cmd_array)
 	exit (0);
 }
 
-int	is_nflag(char *str)
+static int	is_nflag(char *str)
 {
 	int	i;
 

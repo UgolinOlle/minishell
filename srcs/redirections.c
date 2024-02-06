@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:36:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/04 04:34:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:36:56 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static int	open_file(t_redir *redir, int pipe_fd);
 
 void	check_redirections_for_curr_cmd(t_cmd *cmd, t_exec *ex)
 {
@@ -33,6 +35,24 @@ void	check_redirections_for_curr_cmd(t_cmd *cmd, t_exec *ex)
 		}
 		redir = redir->next;
 	}
+}
+
+static int	open_file(t_redir *redir, int pipe_fd)
+{
+	int	fd;
+
+	fd = -1;
+	if (redir->type == PIPE)
+		fd = pipe_fd;
+	else if (redir->type == INFILE)
+		fd = open(redir->file_name, O_RDONLY, 0222);
+	else if (redir->type == OUTFILE)
+		fd = open(redir->file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	else if (redir->type == APPEND)
+		fd = open(redir->file_name, O_RDWR | O_CREAT | O_APPEND, 0644);
+	else if (redir->type == HEREDOC)
+		fd = write_heredoc_to_pipe(redir->heredoc_buff);
+	return (fd);
 }
 
 void	dup_input(t_cmd *cmd, int pipe_fd, t_exec *ex)
@@ -85,24 +105,6 @@ void	dup_output(t_cmd *cmd, int pipe_fd, t_exec *ex)
 	}
 	if (last_output->type != PIPE)
 		close (fd);
-}
-
-int	open_file(t_redir *redir, int pipe_fd)
-{
-	int	fd;
-
-	fd = -1;
-	if (redir->type == PIPE)
-		fd = pipe_fd;
-	else if (redir->type == INFILE)
-		fd = open(redir->file_name, O_RDONLY, 0222);
-	else if (redir->type == OUTFILE)
-		fd = open(redir->file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	else if (redir->type == APPEND)
-		fd = open(redir->file_name, O_RDWR | O_CREAT | O_APPEND, 0644);
-	else if (redir->type == HEREDOC)
-		fd = write_heredoc_to_pipe(redir->heredoc_buff);
-	return (fd);
 }
 
 void	check_input_error(t_exec *ex)
