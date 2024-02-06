@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:13:29 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:36:35 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:38:20 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	exec_cd(t_cmd *cmd, char **cmd_array, t_exec *ex)
 		free_buffer_and_exit(buffer, errno);
 	new_dir = cmd_array[1];
 	cd_with_no_arguments(&new_dir, buffer);
-	chdir(new_dir);
+	if (chdir(new_dir) == -1)
+	{
+		perror(new_dir);
+		free_buffer_and_exit(buffer, 1);
+	}
 	if (update_env("OLD_PWD=", buffer, ex->env_list) == EXIT_FAILURE
 		|| update_env("PWD=", new_dir, ex->env_list) == EXIT_FAILURE)
 		free_buffer_and_exit(buffer, errno);
@@ -99,13 +103,13 @@ static int	update_content(char *var_name, char *new_value, t_list **env_list)
 	while (++j < len)
 		result[i++] = new_value[j];
 	result[i] = '\0';
-	free((*env_list)->content);
 	((*env_list)->content) = (void *)result;
 	return (EXIT_SUCCESS);
 }
 
 static void	free_buffer_and_exit(char *buffer, int exit_code)
 {
+	(void)buffer;
 	free(buffer);
 	exit(exit_code);
 }
