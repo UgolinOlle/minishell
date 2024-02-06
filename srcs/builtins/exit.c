@@ -6,9 +6,10 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:10:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 15:40:18 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:58:40 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "execution.h"
 
 static int	get_new_exit_num(char *cmd);
@@ -36,20 +37,17 @@ void	exec_exit(char **cmd_array, t_redir *redir, t_exec *ex)
 static int	get_new_exit_num(char *cmd)
 {
 	int	num;
-	int	temp;
 	int	digits;
 	int	i;
 
 	i = 0;
 	digits = 0;
 	skip_whitespace(cmd, &i);
-	num = ft_atoi(cmd);
-	temp = num;
-	while (temp > 0)
-	{
-		temp /= 10;
+	num = abs(ft_atoi(cmd));
+	while (num > 0 && digits++ > -1)
+		num /= 10;
+	if (cmd[i] == '+' || cmd[i] == '-')
 		digits++;
-	}
 	if (digits < ft_strlen(&cmd[i]))
 	{
 		ft_putstr_fd("exit: ", 2);
@@ -57,7 +55,8 @@ static int	get_new_exit_num(char *cmd)
 		ft_putstr_fd(" : numeric argument required\n", 2);
 		return (255);
 	}
-	if (num > 255)
+	num = ft_atoi(cmd);
+	if (num > 255 || num < 0)
 		return ((unsigned int)num & 0xFF);
-	return (ft_atoi(cmd));
+	return (num);
 }
