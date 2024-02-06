@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:38:29 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:34:02 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 09:42:14 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,9 @@ void	add_quotes_around_value(char **str)
 	if ((*str)[i] != '=')
 		return ;
 	new_str[++i] = '"';
-	while (++i < len)
+	while (++i < len - 1)
 		new_str[i] = (*str)[i - 1];
-	new_str[++i] = '"';
+	new_str[i] = '"';
 	new_str[++i] = '\0';
 	free(*str);
 	*str = new_str;
