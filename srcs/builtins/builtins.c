@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:09:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 11:13:31 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 07:26:47 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	check_built_ins(t_cmd *cmd, char **cmd_array, t_exec *ex)
 	else if (ft_strncmp(cmd_array[0], "env", ft_strlen("env")) == 0)
 		exec_env(ex);
 	else if (ft_strncmp(cmd_array[0], "exit", ft_strlen("exit")) == 0)
-		exec_exit(cmd_array, ex);
+		exec_exit(cmd_array, cmd->redir, ex);
 }

@@ -6,37 +6,50 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:10:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 16:04:02 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 09:17:13 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	exec_exit(char **cmd_array, t_exec *ex)
+static int	get_new_exit_num(char *cmd)
 {
 	int	i;
-	int	new_exit_num;
+	int	result;
 
-	if (cmd_array[1] == NULL)
-		exit(ex->exit); //actually quit program!!
-	//HANDLE ENV $
 	i = 0;
-	new_exit_num = 0;
-	skip_whitespace(cmd_array[1], &i);
-	while (cmd_array[1][i] && cmd_array[1][i] != ' ' && cmd_array[1][i] != '\t')
+	result = 0;
+	skip_whitespace(cmd, &i);
+	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\t')
 	{
-		if (!(cmd_array[1][i] >= '0' && cmd_array[1][i] <= '9'))
+		if (!(cmd[i] >= '0' && cmd[i] <= '9'))
 		{
-			perror(cmd_array[1]);
-			exit(255);//actualqly quit program!!
+			perror(cmd);
+			exit(255);
 		}
-		new_exit_num = (new_exit_num * 10) + cmd_array[1][i] + '0';
+		result = (result * 10) + cmd[i] + '0';
 		i++;
 	}
+	return (result);
+}
+
+void	exec_exit(char **cmd_array, t_redir *redir, t_exec *ex)
+{
+	int	new_exit_num;
+
+	if (redir == NULL || redir->type != PIPE)
+	{
+		printf("exit\n");
+		ex->quit_program = TRUE;
+	}
+	if (cmd_array[1] == NULL)
+		exit(0);
+	new_exit_num = get_new_exit_num(cmd_array[1]);
 	if ((cmd_array[2]))
 	{
 		perror("Too many arguments\n");
-		exit(1); //DO NOOTTTT QUIT PROGRAM!!!
+		ex->quit_program = FALSE;
+		exit(1);
 	}
-	exit(new_exit_num); //ACTUALLY QUIT PROGROM
+	exit(new_exit_num);
 }

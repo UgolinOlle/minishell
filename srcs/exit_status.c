@@ -6,11 +6,20 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 08:26:04 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 04:38:01 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 05:01:10 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+void	free_env_list(t_list *env)
+{
+	while (env)
+	{
+		free(env);
+		env = env->next;
+	}
+}
 
 void	get_exit_status(t_exec *ex)
 {
@@ -30,4 +39,5 @@ void	get_exit_status(t_exec *ex)
 			child_exit = WTERMSIG(exit_status);
 		ex->exit = child_exit;
 	}
+	printf("\nexit code: %d\n", ex->exit);
 }

@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:38:29 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 12:06:00 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 05:59:45 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	delete_char_from_str(int delete, char **str)
 	len = ft_strlen(*str) - 1;
 	new_str = (char *)malloc(sizeof(char) * len + 1);
 	if (!new_str)
-		return ;//MALLOC ERROR
+		return ;
 	i = -1;
 	while (++i < delete)
 		new_str[i] = (*str)[i];
@@ -61,7 +61,7 @@ void	delete_outside_quotes(char **str)
 	}
 }
 
-int	has_unclosed_quotes(char *str, char *original_cmd)
+void	has_unclosed_quotes(char *str, char *original_cmd)
 {
 	int		i;
 	char	quote;
@@ -82,12 +82,10 @@ int	has_unclosed_quotes(char *str, char *original_cmd)
 			if (unclosed_quote == TRUE)
 			{
 				perror(original_cmd);
-				//	free(original_cmd);
-				return (TRUE);
+				exit(1);
 			}
 		}
 	}
-	return (FALSE);
 }
 
 void	add_quotes_around_value(char **str)
@@ -99,13 +97,13 @@ void	add_quotes_around_value(char **str)
 	len = ft_strlen(*str) + 2;
 	new_str = (char *)malloc(sizeof(char) * len + 1);
 	if (!new_str)
-		return ;//MALLOC ERROR
+		return ;
 	i = -1;
 	while ((*str)[++i])
 	{
 		new_str[i] = (*str)[i];
 		if ((*str)[i] == '=')
-			break;
+			break ;
 	}
 	if ((*str)[i] != '=')
 		return ;
@@ -133,7 +131,7 @@ void	add_slash_to_inside_double_quotes(char **str, int len)
 	}
 	new_str = (char *)malloc(sizeof(char) * len + double_quotes + 1);
 	if (!new_str)
-		return ; //MALLOC ERROR
+		return ;
 	double_quotes = 0;
 	i = -1;
 	while ((*str)[++i])

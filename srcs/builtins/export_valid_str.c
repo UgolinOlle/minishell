@@ -6,13 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:37:39 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 16:02:12 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 07:18:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	is_variable_start_valid(char *cmd_array, char *original_cmd)
+void	is_variable_start_valid(char *cmd_array, char *original_cmd)
 {
 	int	j;
 
@@ -22,12 +22,11 @@ int	is_variable_start_valid(char *cmd_array, char *original_cmd)
 	{
 		perror(original_cmd);
 		free(original_cmd);
-		return (FALSE);
+		exit(1);
 	}
-	return (TRUE);
 }
 
-int	is_variable_content_valid(char *cmd_array, char *original_cmd)
+void	is_variable_content_valid(char *cmd_array, char *original_cmd)
 {
 	int	j;
 
@@ -40,9 +39,8 @@ int	is_variable_content_valid(char *cmd_array, char *original_cmd)
 		{
 			perror(original_cmd);
 			free(original_cmd);
-			return (FALSE);
+			exit(1);
 		}
 		j++;
 	}
-	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:30:16 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/31 04:30:32 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 07:28:22 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	skip_whitespace(char *str, int *i)
 {
+	if (!str)
+		return ;
 	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;
 }

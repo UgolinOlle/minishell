@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 04:26:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 04:28:42 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 09:28:10 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	create_process_ids(t_cmd *cmd, t_exec *ex)
 	}
 	ex->id = (int *)malloc(sizeof(int) * total_cmds);
 	if (!ex->id)
-		return ;//MALLOC ERROR
+		return ;
+	add_data_to_cleanup_list((void *)ex->id, &ex->short_term_data);
 }

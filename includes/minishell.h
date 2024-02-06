@@ -6,9 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/04 04:06:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 06:31:21 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # define PIPE 0
 # define OUTFILE 1
@@ -37,3 +40,5 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }		t_list;
+
+#endif

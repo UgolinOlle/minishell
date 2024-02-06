@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 23:36:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 16:06:58 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 10:25:44 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ void	create_pipe_fds(t_cmd *cmd, t_exec *ex)
 	}
 	ex->fd = (int **)malloc(sizeof(int *) * ex->total_pipes);
 	if (!ex->fd)
-		return ; //MALLOC ERROR
+		return ;
+	add_data_to_cleanup_list((void *)ex->fd, &ex->short_term_data);
 	i = -1;
 	while (++i < ex->total_pipes)
 	{
 		ex->fd[i] = (int *)malloc(sizeof(int) * 2);
 		if (!ex->fd[i] || pipe(ex->fd[i]) == -1)
-			return ;//MALLOC ERROR
+			return ;
+		add_data_to_cleanup_list((void *)ex->fd[i], &ex->short_term_data);
 	}
 }
 
@@ -56,7 +58,7 @@ int	write_heredoc_to_pipe(char *buffer)
 	int	len;
 
 	if (pipe(fd) == -1)
-		return (-1);//HANDLE ERROR
+		return (-1);
 	len = ft_strlen(buffer);
 	write(fd[STDOUT_FILENO], buffer, len);
 	close(fd[STDOUT_FILENO]);

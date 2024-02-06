@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:13:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/29 02:09:38 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 04:53:38 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ void	exec_pwd(void)
 
 	buff = (char *)malloc(sizeof(char) * MAX_PATH_LINUX);
 	if (!buff)
-		return ; //HANDLE ERROR
+		exit(errno);
 	if (getcwd(buff, MAX_PATH_LINUX) == NULL)
-		return ; //HANDLE ERROR BUFFER TOO SMALL
+	{
+		free(buff);
+		exit(errno);
+	}
 	printf("%s\n", buff);
 	free(buff);
 	exit (0);

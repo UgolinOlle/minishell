@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:13:41 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 11:50:34 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 06:25:03 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_unset(char **cmd_array, t_exec *ex)
 			if (ft_strncmp(cmd_array[i], env_str, ft_strlen(cmd_array[i])) == 0)
 			{
 				delete_node(env_node, &ex->env_list);
-				break;
+				break ;
 			}
 			env_node = env_node->next;
 		}
@@ -52,7 +52,7 @@ void	check_unset_syntax(char **cmd_array)
 					&& !is_digit(cmd_array[i][j] && cmd_array[i][j] != '_')))
 			{
 				perror(cmd_array[i]);
-				exit (1);//ERROR
+				exit (1);
 			}
 		}
 	}

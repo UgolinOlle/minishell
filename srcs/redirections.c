@@ -6,13 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:36:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/04 04:08:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 04:34:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	check_redirections_for_curr_cmd(t_cmd *cmd)
+void	check_redirections_for_curr_cmd(t_cmd *cmd, t_exec *ex)
 {
 	int		fd;
 	t_redir	*redir;
@@ -23,13 +23,19 @@ void	check_redirections_for_curr_cmd(t_cmd *cmd)
 		if (redir->type != PIPE)
 		{
 			fd = open_file(redir, NO_PIPE);
+			if (fd == -1)
+			{
+				ex->input_error = TRUE;
+				perror(redir->file_name);
+				return ;
+			}
 			close(fd);
 		}
 		redir = redir->next;
 	}
 }
 
-void	dup_input(t_cmd *cmd, int pipe_fd)
+void	dup_input(t_cmd *cmd, int pipe_fd, t_exec *ex)
 {
 	t_redir	*redir;
 	t_redir	*last_input;
@@ -48,14 +54,14 @@ void	dup_input(t_cmd *cmd, int pipe_fd)
 	fd = open_file(last_input, pipe_fd);
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
-		perror("Error using dup2\n");
-		exit(errno);
+		ex->input_error = TRUE;
+		return ;
 	}
 	if (last_input->type != PIPE)
 		close (fd);
 }
 
-void	dup_output(t_cmd *cmd, int pipe_fd)
+void	dup_output(t_cmd *cmd, int pipe_fd, t_exec *ex)
 {
 	t_redir	*redir;
 	t_redir	*last_output;
@@ -74,8 +80,8 @@ void	dup_output(t_cmd *cmd, int pipe_fd)
 	fd = open_file(last_output, pipe_fd);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
-		perror("Error using dup2\n");
-		exit(errno);
+		ex->input_error = TRUE;
+		return ;
 	}
 	if (last_output->type != PIPE)
 		close (fd);
@@ -96,15 +102,13 @@ int	open_file(t_redir *redir, int pipe_fd)
 		fd = open(redir->file_name, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (redir->type == HEREDOC)
 		fd = write_heredoc_to_pipe(redir->heredoc_buff);
-	if (fd == -1 && redir->type != PIPE)
-	{
-		perror(redir->file_name);
-		exit(1);
-	}
-	if (fd == -1 && redir->type == PIPE)
-	{
-		perror("Error creating pipe\n");
-		exit(errno);
-	}
 	return (fd);
+}
+
+void	check_input_error(t_exec *ex)
+{
+	if (ex->input_error == FALSE)
+		return ;
+	ex->input_error = TRUE;
+	exit (errno);
 }

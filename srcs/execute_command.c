@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:35:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 11:44:46 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/04 04:38:40 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	execute_command(t_cmd *cmd, t_exec *ex)
 	char	*cmd_path;
 	char	**env;
 
-	(void)ex;
-	//check for envp expandables(cmd->array) //maybe use realloc
 	check_built_ins(cmd, cmd->array, ex);
 	env = ft_split(getenv("PATH"), ':');
 	cmd_path = get_cmd_path_for_exec(cmd->array, env);
