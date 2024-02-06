@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:13:41 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:35:12 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:06:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	check_unset_syntax(char **cmd_array)
 		while (cmd_array[i][++j])
 		{
 			if (is_digit(cmd_array[i][0]) || (!is_letter(cmd_array[i][j])
-					&& !is_digit(cmd_array[i][j] && cmd_array[i][j] != '_')))
+					&& !is_digit(cmd_array[i][j]) && cmd_array[i][j] != '_'))
 			{
 				perror(cmd_array[i]);
 				exit (1);
