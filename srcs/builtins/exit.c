@@ -6,10 +6,9 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:10:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:29:30 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:40:18 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "execution.h"
 
 static int	get_new_exit_num(char *cmd);
@@ -18,9 +17,9 @@ void	exec_exit(char **cmd_array, t_redir *redir, t_exec *ex)
 {
 	int	new_exit_num;
 
-	if (redir == NULL || redir->type != PIPE)
+	if (!redir || redir->type != PIPE)
 	{
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 2);
 		ex->quit_program = TRUE;
 	}
 	if (cmd_array[1] == NULL)
@@ -28,8 +27,7 @@ void	exec_exit(char **cmd_array, t_redir *redir, t_exec *ex)
 	new_exit_num = get_new_exit_num(cmd_array[1]);
 	if ((cmd_array[2]))
 	{
-		perror("Too many arguments\n");
-		ex->quit_program = FALSE;
+		ft_putstr_fd("exit: too many arguments\n", 2);
 		exit(1);
 	}
 	exit(new_exit_num);
@@ -37,21 +35,29 @@ void	exec_exit(char **cmd_array, t_redir *redir, t_exec *ex)
 
 static int	get_new_exit_num(char *cmd)
 {
+	int	num;
+	int	temp;
+	int	digits;
 	int	i;
-	int	result;
 
 	i = 0;
-	result = 0;
+	digits = 0;
 	skip_whitespace(cmd, &i);
-	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\t')
+	num = ft_atoi(cmd);
+	temp = num;
+	while (temp > 0)
 	{
-		if (!(cmd[i] >= '0' && cmd[i] <= '9'))
-		{
-			perror(cmd);
-			exit(255);
-		}
-		result = (result * 10) + cmd[i] + '0';
-		i++;
+		temp /= 10;
+		digits++;
 	}
-	return (result);
+	if (digits < ft_strlen(&cmd[i]))
+	{
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(" : numeric argument required\n", 2);
+		return (255);
+	}
+	if (num > 255)
+		return ((unsigned int)num & 0xFF);
+	return (ft_atoi(cmd));
 }
