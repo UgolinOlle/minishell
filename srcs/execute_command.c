@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:35:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/08 01:52:00 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/08 02:10:16 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 	int		i;
 
 	i = -1;
+	if (access(cmd_array[0], F_OK | X_OK) == 0)
+		return (cmd_array[0]);
 	while (env[++i] != NULL)
 	{
 		test_path = ft_strjoin_with_sep(env[i], cmd_array[0], '/');
@@ -62,6 +64,10 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 	}
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd_array[0], 2);
-	ft_putstr_fd(": command not found", 2);
+	if (ft_strchr(cmd_array[0], '/'))
+		ft_putstr_fd(": No such file or directory", 2);
+	else
+		ft_putstr_fd(": command not found", 2);
 	exit(127);
 }
+
