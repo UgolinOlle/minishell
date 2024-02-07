@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:35:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/07 04:15:54 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:52:00 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	execute_command(t_cmd *cmd, t_exec *ex)
 	check_built_ins(cmd, cmd->array, ex);
 	env = ft_split(getenv("PATH"), ':');
 	cmd_path = get_cmd_path_for_exec(cmd->array, env);
-	printf("hello2\n");
 	execve(cmd_path, cmd->array, env);
 	perror(cmd->array[0]);
 	exit(127);
