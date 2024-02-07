@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:13:29 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 13:38:20 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:34:12 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	free_buffer_and_exit(char *buffer, int exit_code);
 static int	update_content(char *var_name, char *new_value, t_list **env_list);
-static int	update_env(char *var_name, char *new_env, t_list *env_list);
+static int	update_env(char *var_name, char *new_env, t_list *env, char *buf);
 static void	cd_with_no_arguments(char **new_dir, char *pwd);
 
 void	exec_cd(t_cmd *cmd, char **cmd_array, t_exec *ex)
@@ -37,12 +37,12 @@ void	exec_cd(t_cmd *cmd, char **cmd_array, t_exec *ex)
 	cd_with_no_arguments(&new_dir, buffer);
 	if (chdir(new_dir) == -1)
 	{
+		ft_putstr_fd("minishell: cd: ", 2);
 		perror(new_dir);
 		free_buffer_and_exit(buffer, 1);
 	}
-	if (update_env("OLD_PWD=", buffer, ex->env_list) == EXIT_FAILURE
-		|| update_env("PWD=", new_dir, ex->env_list) == EXIT_FAILURE)
-		free_buffer_and_exit(buffer, errno);
+	update_env("OLD_PWD=", buffer, ex->env_list, buffer);
+	update_env("PWD=", new_dir, ex->env_list, buffer);
 	free_buffer_and_exit(buffer, 0);
 }
 
@@ -65,22 +65,22 @@ static void	cd_with_no_arguments(char **new_dir, char *pwd)
 	}
 }
 
-static int	update_env(char *var_name, char *new_env, t_list *env_list)
+static int	update_env(char *var_name, char *new_env, t_list *env, char *buf)
 {
 	int		i;
 	char	*next_env;
 
 	i = -1;
-	while (env_list->next)
+	while (env->next)
 	{
-		next_env = (char *)(env_list->next->content);
+		next_env = (char *)(env->next->content);
 		if (ft_strncmp(var_name, next_env, ft_strlen(var_name)) == 0)
 			break ;
-		env_list = env_list->next;
+		env = env->next;
 	}
-	if (env_list == NULL)
-		return (EXIT_FAILURE);
-	return (update_content(var_name, new_env, &env_list));
+	if (env == NULL)
+		free_buffer_and_exit(buf, errno);
+	return (update_content(var_name, new_env, &env));
 }
 
 static int	update_content(char *var_name, char *new_value, t_list **env_list)

@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:16:02 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 15:57:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 08:28:53 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static int	is_nflag(char *str);
 
 void	exec_echo(char **cmd_array)
 {
@@ -19,9 +21,10 @@ void	exec_echo(char **cmd_array)
 
 	i = 0;
 	n_flag = 0;
-	//GET ENV EXPANDABLES $
 	while (cmd_array[++i])
 	{
+		if (cmd_array[i][0] == '\0')
+			continue ;
 		if (is_nflag(cmd_array[i]) && n_flag + 1 == i)
 		{
 			n_flag++;
@@ -36,7 +39,7 @@ void	exec_echo(char **cmd_array)
 	exit (0);
 }
 
-int	is_nflag(char *str)
+static int	is_nflag(char *str)
 {
 	int	i;
 

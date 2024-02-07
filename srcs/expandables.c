@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:34:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:38:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:35:11 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_dollar_sign(t_cmd **cmd_ptr, t_exec *ex)
 	cmd = *cmd_ptr;
 	while (cmd)
 	{
-		i = 0;
+		i = -1;
 		while (cmd->array[++i])
 		{
 			j = -1;
@@ -59,6 +59,7 @@ static void	sub_expandable(char **str, int prefix, int delete, t_exec *ex)
 	char	*new_str;
 	int		new_len;
 
+	(void)ex;
 	substitute = find_env_value(*str, prefix, &delete, ex);
 	if (delete == 1)
 		return ;
@@ -66,6 +67,7 @@ static void	sub_expandable(char **str, int prefix, int delete, t_exec *ex)
 	new_str = (char *)malloc(sizeof(char) * new_len + 1);
 	if (substitute)
 	{
+		printf("hey\n");
 		ft_strlcpy(new_str, *str, prefix + 1);
 		ft_strcat(new_str, substitute);
 		free(substitute);
@@ -83,6 +85,8 @@ static char	*find_env_value(char *str, int prefix, int *delete, t_exec *ex)
 	t_list	*env;
 
 	substitute = NULL;
+	if (*delete == 1)
+		return (substitute);
 	if ((str)[prefix + 1] == '?')
 	{
 		substitute = ft_itoa(ex->exit);

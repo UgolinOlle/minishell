@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:37:39 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/04 07:18:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/07 04:25:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	is_variable_start_valid(char *cmd_array, char *original_cmd)
 	skip_whitespace(cmd_array, &j);
 	if (!is_letter(cmd_array[j]) && cmd_array[j] != '_')
 	{
-		perror(original_cmd);
+		ft_putstr_fd("minishell: export `", 2);
+		ft_putstr_fd(cmd_array, 2);
+		ft_putstr_fd("': not a valid identifier", 2);
 		free(original_cmd);
 		exit(1);
 	}
@@ -37,7 +39,9 @@ void	is_variable_content_valid(char *cmd_array, char *original_cmd)
 		if (!is_letter(cmd_array[j]) && !is_digit(cmd_array[j])
 			&& cmd_array[j] != '_')
 		{
-			perror(original_cmd);
+			ft_putstr_fd("minishell: export `", 2);
+			ft_putstr_fd(cmd_array, 2);
+			ft_putstr_fd("': not a valid identifier", 2);
 			free(original_cmd);
 			exit(1);
 		}

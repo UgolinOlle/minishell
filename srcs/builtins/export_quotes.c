@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:38:29 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 09:42:14 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:23:48 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	has_unclosed_quotes(char *str, char *original_cmd)
 			}
 			if (unclosed_quote == TRUE)
 			{
-				perror(original_cmd);
+				ft_putstr_fd("minishell: export `", 2);
+				ft_putstr_fd(original_cmd, 2);
+				ft_putstr_fd("': not a valid identifier", 2);
 				exit(1);
 			}
 		}

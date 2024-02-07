@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_status.c                                      :+:      :+:    :+:   */
+/*   ft_write.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 08:26:04 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/08 01:41:36 by artclave         ###   ########.fr       */
+/*   Created: 2023/08/30 01:40:00 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/06 15:32:51 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "libft.h"
 
-void	get_exit_status(t_exec *ex)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	exit_status;
-	int	child_exit;
 	int	i;
 
-	child_exit = 0;
-	exit_status = 0;
-	i = -1;
-	while (++i <= ex->total_pipes)
+	i = 0;
+	if (!s || fd < 0 || fd > 1023)
+		return ;
+	while (s[i])
 	{
-		waitpid(ex->id[i], &exit_status, 0);
-		if (WIFEXITED(exit_status))
-			child_exit = WEXITSTATUS(exit_status);
-		else if (WIFSIGNALED(exit_status))
-			child_exit = WTERMSIG(exit_status);
-		ex->exit = child_exit;
+		write(fd, &s[i], 1);
+		i++;
 	}
 }

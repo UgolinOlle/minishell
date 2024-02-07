@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:24:19 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:41:46 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,17 @@
 
 static void	clean_t_cmd(t_cmd *cmd);
 
-void	clean_and_quit_program(t_exec *ex)
+void	maybe_quit_program(t_exec *ex)
 {
+	if (ex->cmd->next)
+		return ;
+	if (ft_strncmp(ex->cmd->array[0], "exit", ft_strlen("exit")) != 0)
+		return ;
+	if (!(ex->cmd->array[1] == NULL
+			|| !str_is_numerical(ex->cmd->array[1])
+			|| (str_is_numerical(ex->cmd->array[1])
+				&& ex->cmd->array[2] == NULL)))
+		return ;
 	clean_list(ex->env_list, FALSE);
 	clean_t_cmd(ex->cmd);
 	exit(ex->exit);

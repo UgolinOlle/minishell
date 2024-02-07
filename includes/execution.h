@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 02:03:36 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:35:31 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:10:51 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <gmp.h>
 # include <stdio.h>
 # include <errno.h>
+# include <stdint.h>
+# include <limits.h>
 # include "minishell.h"
 
 # define SUCCESS 0
@@ -45,7 +48,6 @@ typedef struct s_exec
 	t_list	*short_term_data; //SHORT
 	t_list	*long_term_data; //LONG
 	int		input_error;
-	int		quit_program;
 }		t_exec; //LONG
 
 void	initialize_minishell(t_exec *ex, char **env);
@@ -78,10 +80,12 @@ void	has_unclosed_quotes(char *str, char *original_cmd);
 void	delete_outside_quotes(char **str);
 void	exec_unset(char **cmd_array, t_exec *ex);
 void	exec_env(t_exec *ex);
-void	exec_exit(char **cmd_array, t_redir *redir, t_exec *ex);
+void	exec_exit(char **cmd_array, t_redir *redir);
 void	check_input_error(t_exec *ex);
 void	add_data_to_cleanup_list(void *content, t_list **list);
 void	clean_list(t_list *list, int clean_content);
 void	clean_and_quit_program(t_exec *ex);
+void	maybe_quit_program(t_exec *ex);
+int	str_is_numerical(char *str);
 
 #endif

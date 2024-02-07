@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 05:28:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:21:31 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/07 04:28:07 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	execution(t_exec *ex)
 	t_cmd	*cmd;
 
 	cmd = ex->cmd;
-	ex->quit_program = TRUE;
 	handle_dollar_sign(&ex->cmd, ex);
 	create_pipe_fds(cmd, ex);
 	create_process_ids(cmd, ex);
@@ -34,8 +33,7 @@ void	execution(t_exec *ex)
 	last_command(cmd, ex);
 	get_exit_status(ex);
 	clean_list(ex->short_term_data, TRUE);
-	if (ex->quit_program == TRUE)
-		clean_and_quit_program(ex);
+	maybe_quit_program(ex);
 }
 
 static void	piped_commands(t_cmd *cmd, t_exec *ex)
