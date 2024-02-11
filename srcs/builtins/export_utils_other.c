@@ -1,18 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_print.c                                     :+:      :+:    :+:   */
+/*   export_utils_other.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 13:55:16 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 08:30:54 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 13:08:48 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
 static int	next_smallest_string(t_list *env, char *new_min, char *old_min);
+
+int	is_variable_start_valid(char *cmd_array, char *original_cmd)
+{
+	int	j;
+
+	j = 0;
+	skip_whitespace(cmd_array, &j);
+	if (!is_letter(cmd_array[j]) && cmd_array[j] != '_')
+	{
+		print_error("export `", cmd_array, "': not a valid identifier");
+		return (free_data(NULL, original_cmd, 1));
+	}
+	return (0);
+}
+
+int	is_variable_content_valid(char *cmd_array, char *original_cmd)
+{
+	int	j;
+
+	j = 0;
+	skip_whitespace(cmd_array, &j);
+	while (cmd_array[j] && cmd_array[j] != '=')
+	{
+		if (!is_letter(cmd_array[j]) && !is_digit(cmd_array[j])
+			&& cmd_array[j] != '_')
+		{
+			print_error("export `", cmd_array, "': not a valid identifier");
+			return (free_data(NULL, original_cmd, 1));
+		}
+		j++;
+	}
+	return (0);
+}
 
 void	print_env_alphabetically(t_list *env, t_list *head)
 {

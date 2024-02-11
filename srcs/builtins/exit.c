@@ -5,42 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:10:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/08 01:34:31 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 12:46:22 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static int	get_new_exit_num(char *cmd, int new_line);
-static void	check_numeric_argument(char *str, int new_line, __int128_t num);
-__int128_t	atoi_128bits(const char *str);
+static int			get_new_exit_num(char *cmd);
+static int			check_numeric_argument(char *str, __int128_t num);
+static __int128_t	atoi_128bits(const char *str);
 
-void	exec_exit(char **cmd_array, t_redir *redir)
+int	exec_exit(char **cmd_array, t_cmd *cmd)
 {
-	int	new_exit_num;
-	int	new_line;
+	int		new_exit_num;
+	t_redir	*redir;
 
-	new_line = FALSE;
+	redir = cmd->redir;
 	if (!redir || redir->type != PIPE)
-	{
-		ft_putstr_fd("exit", 1);
-		new_line = TRUE;
-	}
+		ft_putstr_fd("exit\n", 1);
 	if (cmd_array[1] == NULL)
 		exit(0);
-	new_exit_num = get_new_exit_num(cmd_array[1], new_line);
+	new_exit_num = get_new_exit_num(cmd_array[1]);
+	if (new_exit_num == -1)
+		return (255);
 	if ((cmd_array[2]))
 	{
-		if (new_line == TRUE)
-			ft_putstr_fd("\n", 2);
-		ft_putstr_fd("minishell: exit: too many arguments", 2);
-		exit(1);
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return (1);
 	}
-	exit(new_exit_num);
+	return (new_exit_num);
 }
 
-__int128_t	atoi_128bits(const char *str)
+static int	get_new_exit_num(char *cmd)
+{
+	__int128_t	num;
+	int			i;
+
+	i = 0;
+	skip_whitespace(cmd, &i);
+	num = atoi_128bits(cmd);
+	if (check_numeric_argument(&cmd[i], num) == 255)
+		return (-1);
+	if (num > 255 || num < 0)
+		return ((int)(num % 256));
+	return ((int)num);
+}
+
+static __int128_t	atoi_128bits(const char *str)
 {
 	int			i;
 	int			sign;
@@ -64,21 +76,7 @@ __int128_t	atoi_128bits(const char *str)
 	return (num * sign);
 }
 
-static int	get_new_exit_num(char *cmd, int new_line)
-{
-	__int128_t	num;
-	int			i;
-
-	i = 0;
-	skip_whitespace(cmd, &i);
-	num = atoi_128bits(cmd);
-	check_numeric_argument(&cmd[i], new_line, num);
-	if (num > 255 || num < 0)
-		return ((int)(num % 256));
-	return ((int)num);
-}
-
-static void	check_numeric_argument(char *str, int new_line, __int128_t num)
+static int	check_numeric_argument(char *str, __int128_t num)
 {
 	int	i;
 
@@ -87,14 +85,12 @@ static void	check_numeric_argument(char *str, int new_line, __int128_t num)
 		i++;
 	while (str[++i])
 	{
-		if (num > LLONG_MAX || num < LLONG_MIN || (str[i]) == FALSE)
+		if (num > LLONG_MAX || num < LLONG_MIN
+			|| str_is_numerical(&str[i]) == FALSE)
 		{
-			if (new_line == TRUE)
-				ft_putstr_fd("\n", 2);
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(str, 2);
-			ft_putstr_fd(": numeric argument required", 2);
-			exit(255);
+			print_error("exit: ", str, ": numeric argument required");
+			return (255);
 		}
 	}
+	return (0);
 }

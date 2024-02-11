@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_child.c                                        :+:      :+:    :+:   */
+/*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:10:51 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 11:31:48 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 07:03:24 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 10:07:17 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	exec_env(t_exec *ex)
+void	save_original_io(t_exec *ex)
 {
-	t_list	*env_node;
-	char	*found;
-	char	*env_str;
+	ex->stdin_original = dup(STDIN_FILENO);
+	ex->stdout_original = dup(STDOUT_FILENO);
+}
 
-	env_node = ex->env_list;
-	while (env_node)
-	{
-		env_str = ((char *)env_node->content);
-		found = ft_strchr(env_str, '=');
-		if (found)
-		{
-			write(STDOUT_FILENO, env_str, ft_strlen(env_str));
-			write(STDOUT_FILENO, "\n", 1);
-		}
-		env_node = env_node->next;
-	}
-	return (0);
+void	reset_io(t_exec *ex)
+{
+	dup2(ex->stdin_original, STDIN_FILENO);
+	close(ex->stdin_original);
+	dup2(ex->stdout_original, STDOUT_FILENO);
+	close(ex->stdout_original);
 }

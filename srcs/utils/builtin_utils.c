@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_child.c                                        :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:10:51 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 11:31:48 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 13:42:49 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 13:44:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	exec_env(t_exec *ex)
+int	has_pipe(t_cmd *cmd)
 {
-	t_list	*env_node;
-	char	*found;
-	char	*env_str;
+	t_redir	*redir;
 
-	env_node = ex->env_list;
-	while (env_node)
+	redir = cmd->redir;
+	while (redir)
 	{
-		env_str = ((char *)env_node->content);
-		found = ft_strchr(env_str, '=');
-		if (found)
-		{
-			write(STDOUT_FILENO, env_str, ft_strlen(env_str));
-			write(STDOUT_FILENO, "\n", 1);
-		}
-		env_node = env_node->next;
+		if (redir->type == PIPE)
+			return (TRUE);
+		redir = redir->next;
 	}
-	return (0);
+	return (FALSE);
 }

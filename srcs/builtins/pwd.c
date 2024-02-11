@@ -5,26 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:13:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/04 04:53:38 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 13:29:15 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 13:29:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	exec_pwd(void)
+int	exec_pwd(t_exec *ex)
 {
-	char	*buff;
+	char	*pwd;
 
-	buff = (char *)malloc(sizeof(char) * MAX_PATH_LINUX);
-	if (!buff)
-		exit(errno);
-	if (getcwd(buff, MAX_PATH_LINUX) == NULL)
-	{
-		free(buff);
-		exit(errno);
-	}
-	printf("%s\n", buff);
-	free(buff);
-	exit (0);
+	pwd = get_env_value("PWD=", ex->env_list);
+	write(STDOUT_FILENO, pwd, ft_strlen(pwd));
+	write(STDOUT_FILENO, "\n", 1);
+	return (0);
 }

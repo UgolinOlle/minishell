@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 23:36:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/04 10:25:44 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 05:43:48 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 10:06:49 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	create_pipe_fds(t_cmd *cmd, t_exec *ex)
+void	create_pipes(t_cmd *cmd, t_exec *ex)
 {
 	int	i;
 
@@ -38,29 +38,32 @@ void	create_pipe_fds(t_cmd *cmd, t_exec *ex)
 	}
 }
 
-void	close_all_pipes(int **fd, int total_pipes)
+void	dup_pipes(int current, t_cmd *cmd, t_exec *ex)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < total_pipes)
+	(void)ex;
+	if (current > 0)
 	{
-		j = -1;
-		while (++j < 2)
-			close(fd[i][j]);
+		dup2(ex->fd[current - 1][STDIN_FILENO], STDIN_FILENO);
+		close(ex->fd[current - 1][STDIN_FILENO]);
+	}
+	if (cmd->next)
+	{
+		dup2(ex->fd[current][STDOUT_FILENO], STDOUT_FILENO);
+		close(ex->fd[current][STDOUT_FILENO]);
 	}
 }
 
-int	write_heredoc_to_pipe(char *buffer)
+void	close_open_pipes(int curr_cmd, t_exec *ex)
 {
-	int	fd[2];
-	int	len;
+	int	i;
 
-	if (pipe(fd) == -1)
-		return (-1);
-	len = ft_strlen(buffer);
-	write(fd[STDOUT_FILENO], buffer, len);
-	close(fd[STDOUT_FILENO]);
-	return (fd[STDIN_FILENO]);
+	if (curr_cmd == ex->total_pipes)
+		return ;
+	close(ex->fd[curr_cmd][STDIN_FILENO]);
+	i = curr_cmd;
+	while (++i < ex->total_pipes)
+	{
+		close(ex->fd[i][STDIN_FILENO]);
+		close(ex->fd[i][STDOUT_FILENO]);
+	}
 }
