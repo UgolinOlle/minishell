@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:18:38 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/31 04:02:24 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 05:50:45 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 05:52:09 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	new_node(void *content, t_list **list)
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)
-		return ;//HANDLE ERROR
+		return ;
 	new_node->content = content;
 	new_node->next = NULL;
 	if (*list == NULL)

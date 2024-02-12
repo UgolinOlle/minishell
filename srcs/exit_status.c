@@ -5,29 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 08:26:04 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 04:38:01 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 07:19:13 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 11:12:45 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	get_exit_status(t_exec *ex)
+void	wait_for_child_exit_status(t_exec *ex)
 {
 	int	exit_status;
 	int	child_exit;
-	int	i;
+	int	curr_child;
 
-	child_exit = 0;
-	exit_status = 0;
-	i = -1;
-	while (++i <= ex->total_pipes)
+	curr_child = -1;
+	while (++curr_child < ex->total_children)
 	{
-		waitpid(ex->id[i], &exit_status, 0);
+		waitpid(ex->id[curr_child], &exit_status, 0);
 		if (WIFEXITED(exit_status))
 			child_exit = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))
 			child_exit = WTERMSIG(exit_status);
-		ex->exit = child_exit;
+		if (ex->is_builtin_last == FALSE)
+			ex->exit = child_exit;
 	}
 }

@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 17:14:40 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/23 02:45:04 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/06 06:33:17 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 int	ft_strlcpy(char *dst, const char *src, int dstsize)
 {
 	int	i;

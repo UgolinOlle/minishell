@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   exec_main_logic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 15:52:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 05:56:09 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 05:36:31 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 14:37:27 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "execution.h"
 
-int	ft_strlen(const char *s)
+void	execution_main(t_exec *ex)
 {
-	int		i;
+	t_cmd	*cmd;
 
-	i = 0;
-	while (s && s[i] != '\0')
-		i++;
-	return (i);
+	cmd = ex->cmd;
+	handle_dollar_sign(&ex->cmd, ex);
+	create_pipes(cmd, ex);
+	create_child_ids(cmd, ex);
+	process_cmds(cmd, ex);
+	wait_for_child_exit_status(ex);
+	maybe_increase_shlvl(cmd, ex);
+	maybe_quit_program(ex);
+	clean_list(ex->short_term_data, TRUE);
+	clean_t_cmd(ex->cmd);
 }

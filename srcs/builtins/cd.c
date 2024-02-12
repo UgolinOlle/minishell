@@ -5,42 +5,41 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:13:29 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/29 08:59:07 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 13:45:20 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	exec_cd(t_cmd *cmd, char **cmd_array, t_exec *ex)
+static void	cd_with_no_arguments(char **new_dir, char *pwd);
+static void	update_env(char *var_name, char *new_env, t_exec *ex);
+
+int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 {
 	char	*buffer;
 	char	*new_dir;
 
-	//get dollar sign expandables
-	//check if new dir is correct
-	while (cmd->redir)
-	{
-		if (cmd->redir->type == PIPE)
-			exit (0);
-		cmd->redir = cmd->redir->next;
-	}
+	if (has_pipe(cmd) == TRUE)
+		return (0);
 	buffer = (char *)malloc(sizeof(char) * MAX_PATH_LINUX);
 	if (!buffer)
-		return ;//HANDLE ERROR
+		return (malloc_error());
 	if (getcwd(buffer, MAX_PATH_LINUX) == NULL)
-		return ;//HANDLE ERROR BUFFER TOO SMALL
+		return (free_data(NULL, buffer, errno));
 	new_dir = cmd_array[1];
 	cd_with_no_arguments(&new_dir, buffer);
-	chdir(new_dir);
-	update_env("OLD_PWD=", buffer, ex->env_list);
-	update_env("PWD=", new_dir, ex->env_list);
-	exec_pwd(); //FOR CHECKING IT IS UPDATED
-	free(buffer);
-	exit(0);
+	if (chdir(new_dir) == -1)
+	{
+		print_error("cd: ", new_dir, ":No such file or directory");
+		return (free_data(NULL, buffer, 1));
+	}
+	update_env("OLD_PWD=", buffer, ex);
+	update_env("PWD=", new_dir, ex);
+	return (free_data(NULL, buffer, SUCCESS));
 }
 
-void	cd_with_no_arguments(char **new_dir, char *pwd)
+static void	cd_with_no_arguments(char **new_dir, char *pwd)
 {
 	int	i;
 	int	slash_counter;
@@ -59,44 +58,22 @@ void	cd_with_no_arguments(char **new_dir, char *pwd)
 	}
 }
 
-void	update_env(char *var_name, char *new_env, t_list *env_list)
+static void	update_env(char *var_name, char *new_env, t_exec *ex)
 {
-	int		i;
-	char	*next_env;
-
-	i = -1;
-	while (env_list->next)
-	{
-		next_env = (char *)(env_list->next->content);
-		if (ft_strncmp(var_name, next_env, ft_strlen(var_name)) == 0)
-			break ;
-		env_list = env_list->next;
-	}
-	if (env_list == NULL)
-		return ;//ERROR OLD PATH NOT FOUND
-	update_node_content(var_name, new_env, &env_list);
-}
-
-void	update_node_content(char *var_name, char *new_value, t_list **env_list)
-{
-	int		i;
-	int		j;
+	t_list	*env;
 	int		len;
 	char	*result;
 
-	len = ft_strlen(var_name) + ft_strlen(new_value);
+	env = get_env_node(var_name, ex);
+	if (env == NULL)
+		return ;
+	len = ft_strlen(var_name) + ft_strlen(new_env);
 	result = (char *)malloc(sizeof(char) * len + 1);
 	if (!result)
-		return ;//ERROR MALLOC
-	i = -1;
-	len = ft_strlen(var_name);
-	while (++i < len)
-		result[i] = var_name[i];
-	j = -1;
-	len = ft_strlen(new_value);
-	while (++j < len)
-		result[i++] = new_value[j];
-	result[i] = '\0';
-	//ADD TO CLEAN UPON ERROR
-	((*env_list)->content) = (void *)result;
+		return ;
+	ft_strlcpy(result, var_name, ft_strlen(var_name) + 1);
+	ft_strcat(result, new_env);
+	env->content = (void *)result;
+	add_data_to_cleanup_list((void *)result, &ex->long_term_data);
+	return ;
 }

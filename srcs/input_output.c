@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 15:52:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 05:56:09 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 07:03:24 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 10:07:17 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "execution.h"
 
-int	ft_strlen(const char *s)
+void	save_original_io(t_exec *ex)
 {
-	int		i;
+	ex->stdin_original = dup(STDIN_FILENO);
+	ex->stdout_original = dup(STDOUT_FILENO);
+}
 
-	i = 0;
-	while (s && s[i] != '\0')
-		i++;
-	return (i);
+void	reset_io(t_exec *ex)
+{
+	dup2(ex->stdin_original, STDIN_FILENO);
+	close(ex->stdin_original);
+	dup2(ex->stdout_original, STDOUT_FILENO);
+	close(ex->stdout_original);
 }

@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 15:52:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 05:56:09 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 13:42:49 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 13:44:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "execution.h"
 
-int	ft_strlen(const char *s)
+int	has_pipe(t_cmd *cmd)
 {
-	int		i;
+	t_redir	*redir;
 
-	i = 0;
-	while (s && s[i] != '\0')
-		i++;
-	return (i);
+	redir = cmd->redir;
+	while (redir)
+	{
+		if (redir->type == PIPE)
+			return (TRUE);
+		redir = redir->next;
+	}
+	return (FALSE);
 }

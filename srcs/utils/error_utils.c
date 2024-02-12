@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_child.c                                        :+:      :+:    :+:   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:10:51 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 11:31:48 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 09:59:12 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/11 11:27:14 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	exec_env(t_exec *ex)
+int	free_data(char *should_exit, char *data, int exit_code)
 {
-	t_list	*env_node;
-	char	*found;
-	char	*env_str;
+	free(data);
+	if (should_exit)
+		exit(exit_code);
+	return (exit_code);
+}
 
-	env_node = ex->env_list;
-	while (env_node)
-	{
-		env_str = ((char *)env_node->content);
-		found = ft_strchr(env_str, '=');
-		if (found)
-		{
-			write(STDOUT_FILENO, env_str, ft_strlen(env_str));
-			write(STDOUT_FILENO, "\n", 1);
-		}
-		env_node = env_node->next;
-	}
-	return (0);
+void	print_error(char *str1, char *str2, char *str3)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(str1, 2);
+	ft_putstr_fd(str2, 2);
+	ft_putstr_fd(str3, 2);
+	ft_putstr_fd("\n", 2);
+}
+
+int	malloc_error(void)
+{
+	ft_putstr_fd("malloc: Cannot allocate memory", 2);
+	return (1);
 }

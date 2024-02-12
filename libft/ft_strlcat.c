@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 15:52:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/06 05:56:09 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/06 07:58:30 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/06 08:10:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(const char *s)
+void	ft_strcat(char *dst, char *src)
 {
-	int		i;
+	int	i;
+	int	j;
 
 	i = 0;
-	while (s && s[i] != '\0')
+	while (dst && dst[i])
 		i++;
-	return (i);
+	j = -1;
+	while (src && src[++j])
+		dst[i + j] = src[j];
+	dst[i + j] = '\0';
 }
