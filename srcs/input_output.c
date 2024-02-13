@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 07:03:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 10:07:17 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:18:07 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "process_exec.h"
 
 void	save_original_io(t_exec *ex)
 {

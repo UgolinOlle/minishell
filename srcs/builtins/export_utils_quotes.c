@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 13:15:48 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:10:05 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "utils_exec.h"
 
 static void	delete_char_from_str(int delete, char **str);
 

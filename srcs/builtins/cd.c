@@ -6,11 +6,14 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 13:45:20 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:22:09 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "post_exec.h"
+#include "utils_exec.h"
 
 static void	cd_with_no_arguments(char **new_dir, char *pwd);
 static void	update_env(char *var_name, char *new_env, t_exec *ex);

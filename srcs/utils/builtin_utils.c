@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 13:42:49 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 13:44:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:11:30 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
 int	has_pipe(t_cmd *cmd)
 {

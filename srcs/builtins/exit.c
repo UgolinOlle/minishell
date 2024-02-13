@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 12:46:22 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:09:32 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "utils_exec.h"
 
 static int			get_new_exit_num(char *cmd);
 static int			check_numeric_argument(char *str, __int128_t num);

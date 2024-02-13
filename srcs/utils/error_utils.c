@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:59:12 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 11:27:14 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:11:49 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
 int	free_data(char *should_exit, char *data, int exit_code)
 {

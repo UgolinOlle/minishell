@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:30:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/31 04:32:33 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:11:56 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
 int	is_letter(char c)
 {

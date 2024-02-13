@@ -6,11 +6,23 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 14:42:36 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:12:37 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "post_exec.h"
+#include "utils_exec.h"
+
+void	exit_minishell(t_exec *ex, int exit_num)
+{
+	clean_t_cmd(ex->cmd);
+	clean_list(ex->env_list, FALSE);
+	clean_list(ex->shell_env_list, FALSE);
+	clean_list(ex->short_term_data, TRUE);
+	clean_list(ex->long_term_data, TRUE);
+	exit(exit_num);
+}
 
 void	maybe_quit_program(t_exec *ex)
 {
@@ -24,12 +36,8 @@ void	maybe_quit_program(t_exec *ex)
 				&& ex->cmd->array[2] == NULL)))
 		return ;
 	if (change_shlvl(-1, ex) > 1)
-		return ;
-	clean_t_cmd(ex->cmd);
-	clean_list(ex->env_list, FALSE);
-	clean_list(ex->short_term_data, TRUE);
-	clean_list(ex->long_term_data, TRUE);
-	exit(ex->exit);
+		get_previous_shells_env(ex);
+	exit_minishell(ex, ex->exit);
 }
 
 void	clean_list(t_list *list, int clean_content)

@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 07:19:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 11:12:45 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:14:48 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "post_exec.h"
 
 void	wait_for_child_exit_status(t_exec *ex)
 {

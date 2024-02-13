@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:24:21 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 09:57:38 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:11:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
 char	*get_env_value(char *variable, t_list *env_list)
 {

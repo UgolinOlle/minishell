@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 13:32:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 14:41:56 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:11:19 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "utils_exec.h"
 
 static int	check_unset_syntax(char **cmd_array);
 static void	delete_node(t_list *node_delete, t_list **head);

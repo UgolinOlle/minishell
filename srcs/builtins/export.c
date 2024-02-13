@@ -6,11 +6,14 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 14:39:54 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:10:44 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "post_exec.h"
+#include "utils_exec.h"
 
 static int	is_export_syntax_valid(char **cmd_array, char *original_cmd);
 
@@ -36,7 +39,9 @@ int	exec_export(char **cmd_array, t_exec *ex)
 	}
 	if (!cmd_array[1])
 		print_env_alphabetically(ex->env_list, ex->env_list);
-	return (free_data(NULL, original_cmd_str, 0));
+	else
+		free(original_cmd_str);
+	return (0);
 }
 
 static int	is_export_syntax_valid(char **cmd_array, char *original_cmd)

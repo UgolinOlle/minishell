@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:47:14 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 14:42:29 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:07:36 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
 
 int	is_builtin(char *cmd)
 {

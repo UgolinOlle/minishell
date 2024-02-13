@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:41:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 10:39:10 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:15:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "process_exec.h"
 
 static int	write_heredoc_to_pipe(char *buffer);
 

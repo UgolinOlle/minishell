@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:30:10 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/31 04:30:48 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:11:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
 int	is_digit(char c)
 {

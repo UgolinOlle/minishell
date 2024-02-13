@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:43:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 10:06:49 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:19:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "prep_exec.h"
+#include "post_exec.h"
 
 void	create_pipes(t_cmd *cmd, t_exec *ex)
 {

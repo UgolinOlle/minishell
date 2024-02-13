@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 10:44:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 11:22:58 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:08:53 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "utils_exec.h"
 
 static int	is_nflag(char *str);
 

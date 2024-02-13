@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:34:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/08 01:35:11 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:15:02 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "prep_exec.h"
 
 static int	get_expandable_len(char *str);
 static void	sub_expandable(char **str, int prefix, int delete, t_exec *ex);

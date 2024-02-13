@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:50:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 05:52:09 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:11:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
 void	new_node(void *content, t_list **list)
 {

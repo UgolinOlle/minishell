@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 13:08:48 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:09:47 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "utils_exec.h"
 
 static int	next_smallest_string(t_list *env, char *new_min, char *old_min);
 

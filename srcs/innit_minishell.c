@@ -6,11 +6,14 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:37:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 10:29:02 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:17:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "prep_exec.h"
+#include "post_exec.h"
+#include "utils_exec.h"
 
 void	initialize_minishell(t_exec *ex, char **env)
 {
@@ -24,7 +27,11 @@ void	initialize_minishell(t_exec *ex, char **env)
 	ex->program_path = NULL;
 	ex->total_pipes = 0;
 	ex->total_children = 0;
+	ex->is_builtin_last = FALSE;
+	ex->fd = NULL;
+	ex->id = NULL;
 	ex->exit = 0;
+	ex->shell_env_list = NULL;
 	i = -1;
 	while (env[++i])
 	{

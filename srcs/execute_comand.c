@@ -6,11 +6,15 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 11:01:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:14:37 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "process_exec.h"
+#include "builtin_exec.h"
+#include "post_exec.h"
+#include "utils_exec.h"
 
 static char	*get_cmd_path_for_exec(char **cmd_array, char **env);
 
@@ -86,4 +90,5 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 	else
 		ft_putstr_fd(": command not found\n", 2);
 	exit(127);
+	return (NULL);
 }

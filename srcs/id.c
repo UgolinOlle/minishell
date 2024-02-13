@@ -6,11 +6,15 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:45:11 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 10:29:32 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:16:48 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "prep_exec.h"
+#include "builtin_exec.h"
+#include "post_exec.h"
+#include "utils_exec.h"
 
 void	create_child_ids(t_cmd *cmd, t_exec *ex)
 {

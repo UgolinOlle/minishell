@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_is_numerical.c                                 :+:      :+:    :+:   */
+/*   prep_exec.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 02:08:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:12:12 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/13 05:34:17 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 05:40:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "utils_exec.h"
+#ifndef PREP_EXEC_H
+# define PREP_EXEC_H
 
-int	str_is_numerical(char *str)
-{
-	int	i;
+# include "execution.h"
 
-	i = -1;
-	while (str[++i])
-	{
-		if (is_digit(str[i]) == FALSE)
-			return (FALSE);
-	}
-	return (TRUE);
-}
+void	initialize_minishell(t_exec *ex, char **env);
+void	execution_main(t_exec *ex);
+void	handle_dollar_sign(t_cmd **cmd_ptr, t_exec *ex);
+void	create_pipes(t_cmd *cmd, t_exec *ex);
+void	create_child_ids(t_cmd *cmd, t_exec *ex);
+
+#endif

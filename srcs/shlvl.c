@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 06:42:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/11 10:03:17 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:20:11 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "post_exec.h"
+#include "utils_exec.h"
 
 int	is_executable_minishell(char *cmd, t_exec *ex)
 {
@@ -56,11 +58,29 @@ int	change_shlvl(int change, t_exec *ex)
 	return (shlvl_num);
 }
 
-void	maybe_increase_shlvl(t_cmd *cmd, t_exec *ex)
+void	adjust_shlvl(t_cmd *cmd, t_exec *ex)
 {
 	if (cmd->next)
 		return ;
 	if (is_executable_minishell(cmd->array[0], ex) == FALSE)
 		return ;
 	change_shlvl(+1, ex);
+	new_node((void *)ex->env_list, &ex->shell_env_list);
+}
+
+void	get_previous_shells_env(t_exec *ex)
+{
+	t_list	*new_env;
+
+	new_env = get_last_node(ex->shell_env_list);
+	clean_list(ex->env_list, FALSE);
+	while (new_env)
+	{
+		new_node(((void *)new_env->content), &ex->env_list);
+		new_env = new_env->next;
+	}
+	new_env = get_last_node(ex->shell_env_list);
+	free(new_env);
+	new_env = NULL;
+	return ;
 }

@@ -6,11 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 04:30:16 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/04 07:28:22 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:12:04 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
 void	skip_whitespace(char *str, int *i)
 {
